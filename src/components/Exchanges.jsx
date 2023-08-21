@@ -2,16 +2,16 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader.jsx";
 import { server } from "../index.js";
+import ErrorComponent from "./ErrorComponent.jsx";
+import { Link } from "react-router-dom";
 import {
   Container,
   VStack,
   HStack,
   Text,
   Image,
-  Center,
   Heading,
 } from "@chakra-ui/react";
-import { m, transform } from "framer-motion";
 
 const Exchanges = () => {
   const [error, setError] = useState(false);
@@ -23,7 +23,7 @@ const Exchanges = () => {
         const { data } = await axios(`${server}/exchanges`);
         setExchange(data);
         setLoading(false);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         setError(true);
         setLoading(false);
@@ -31,6 +31,10 @@ const Exchanges = () => {
     };
     fetchAPI();
   }, []);
+
+  if (error)
+    return <ErrorComponent message={"Error While Fetching Exchanges"} />;
+
   return (
     <Container maxW={"container.xl"}>
       {loading ? (
@@ -56,34 +60,34 @@ const Exchanges = () => {
 
 const ExchangeCard = ({ name, img, url, rank }) => {
   return (
-    <VStack
-      w={"52"}
-      shadow={"lg"}
-      p={"8"}
-      borderRadius={"lg"}
-      transition={"all 0.3s"}
-      m={"4"}
-      css={{
-        "&:hover": {
-          transform: "scale(1.1)",
-        },
-      }}
-    >
-      <Image
-        animate={{}}
-        src={img}
-        // w={"10"}
-        // h={"10"}
-        p={"4"}
-        objectFit={"contain"}
-        alt={"Exchange"}
-      />
-      <Heading size={"md"} noOfLines={1}>
-        {rank}
-      </Heading>
+    <Link to={url}>
+      <VStack
+        w={"52"}
+        shadow={"lg"}
+        p={"8"}
+        borderRadius={"lg"}
+        transition={"all 0.3s"}
+        m={"4"}
+        css={{
+          "&:hover": {
+            transform: "scale(1.1)",
+          },
+        }}
+      >
+        <Image
+          animate={{}}
+          src={img}
+          p={"4"}
+          objectFit={"contain"}
+          alt={"Exchange"}
+        />
+        <Heading size={"md"} noOfLines={1}>
+          {rank}
+        </Heading>
 
-      <Text noOfLines={1}>{name}</Text>
-    </VStack>
+        <Text noOfLines={1}>{name}</Text>
+      </VStack>
+    </Link>
   );
 };
 
