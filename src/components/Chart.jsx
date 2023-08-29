@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { HStack } from "@chakra-ui/react";
 
 ChartJS.register(
   CategoryScale,
@@ -45,7 +46,11 @@ const Chart = ({ arr = [], currency, days }) => {
       },
     ],
   };
-  return <Line data={data} options={{ responsive: true }} />;
+  return (
+    <HStack>
+      <Line data={data} options={{ responsive: true }} />
+    </HStack>
+  );
 };
 
 export default Chart;
