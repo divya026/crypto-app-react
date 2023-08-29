@@ -5,6 +5,8 @@ import App from "./App";
 // import { BrowserRouter } from "react-router-dom";
 import { theme } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
